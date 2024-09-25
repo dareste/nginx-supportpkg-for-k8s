@@ -1,8 +1,5 @@
 name: Build and upload release artifact
 
-permissions:
-  contents: read
-
 on:
   release:
     types: [created]
