@@ -1,5 +1,8 @@
 name: Build and upload release artifact
 
+permissions:
+  contents: read
+
 on:
   release:
     types: [created]
@@ -47,6 +50,3 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         asset_paths: '["./release/*.gz"]'
-
-    - name: Update new version in krew-index
-      uses: rajatjindal/krew-release-bot@v0.0.46
