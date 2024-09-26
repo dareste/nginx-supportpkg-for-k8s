@@ -45,6 +45,7 @@ jobs:
                                                    -o release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}/kubectl-nginx_supportpkg
         cp LICENSE release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}/
         tar czvf release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}.tar.gz -C release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}/ .
+        sha256sum "release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}.tar.gz" >> "release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt"
         done; done
 
     - name: Upload release binaries
