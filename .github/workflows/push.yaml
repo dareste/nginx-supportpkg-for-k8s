@@ -19,10 +19,12 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          path: project
 
       - name: Build Golang binary
         run: |
-          cd nginx-supportpkg-for-k8s
+          cd project
           go build -o nginx-sp
           chmod +x nginx-sp
           ./nginx-sp -p nic -n default
