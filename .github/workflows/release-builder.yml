@@ -53,4 +53,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
-        asset_paths: '["./release/*.gz"]'
+        asset_paths: '["./release/*.gz", "./release/*.txt", "./release/*.sig", "./release/*.pem"]'
