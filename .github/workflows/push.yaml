@@ -1,0 +1,28 @@
+name: Build and Deploy
+
+on: [push]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Set up k3d
+        run: |
+          curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+          k3d cluster create mycluster
+
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Golang binary
+        run: |
+          cd nginx-supportpkg-for-k8s
+          go build -o nginx-sp
+          chmod +x nginx-sp
+          ./nginx-sp -p nic -n default
