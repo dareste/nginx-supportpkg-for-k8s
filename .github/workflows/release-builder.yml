@@ -34,7 +34,7 @@ jobs:
       with:
         cosign-release: 'v2.4.0'
 
-    - name: Check install!
+    - name: Check cosign version
       run: cosign version
 
     - name: Build
