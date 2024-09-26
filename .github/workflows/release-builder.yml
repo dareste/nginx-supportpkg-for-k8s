@@ -29,8 +29,17 @@ jobs:
       with:
         go-version: '1.22.4'
 
+    - name: Install Cosign
+      uses: sigstore/cosign-installer@v3.6.0
+      with:
+        cosign-release: 'v2.4.0'
+
+    - name: Check install!
+      run: cosign version
+
     - name: Build
       run: |
+        set -e
         BUILD=$(git log --format='%H' -n 1)
         VERSION=$RELEASE_VERSION
         OSES="linux darwin windows"
@@ -46,6 +55,9 @@ jobs:
         cp LICENSE release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}/
         tar czvf release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}.tar.gz -C release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}/ .
         sha256sum "release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}.tar.gz" >> "release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt"
+        cosign sign-blob "release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt" \
+              --output-signature="release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt.sig" 
+              --output-certificate="release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt.pem" -y
         done; done
 
     - name: Upload release binaries
