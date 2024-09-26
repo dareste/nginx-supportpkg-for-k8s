@@ -55,10 +55,10 @@ jobs:
         cp LICENSE release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}/
         tar czvf release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}.tar.gz -C release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}/ .
         sha256sum "release/kubectl-nginx_supportpkg_${VERSION}_${OS}_${ARCH}.tar.gz" >> "release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt"
-        cosign sign-blob "release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt" \
-              --output-signature="release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt.sig" 
-              --output-certificate="release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt.pem" -y
         done; done
+        cosign sign-blob "release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt" \
+              --output-signature="release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt.sig" \
+              --output-certificate="release/kubectl-nginx_supportpkg_${VERSION}_checksums.txt.pem" -y
 
     - name: Upload release binaries
       uses: alexellis/upload-assets@0.4.0
